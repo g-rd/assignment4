@@ -6,7 +6,7 @@ from db_setup import app
 from models import TestResults, Users, TestSession, FatigueTest, SustainedAttentionTest
 
 
-@app.get("/users", response_model=List[User_Pydantic])
+@app.get("/users", response_model=List[UserModel])
 async def get_users():
     return await User_Pydantic.from_queryset(Users.all())
 
