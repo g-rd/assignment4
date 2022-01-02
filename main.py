@@ -2,7 +2,7 @@
 from typing import List
 
 from data_models import User_Pydantic, UserModel, UserIn_Pydantic, Test_Results_Pydantic, TestResultModelIn, \
-    TestResultModel
+    TestResultModel, Test_Session_Pydantic
 from db_setup import app
 from models import TestResults, Users, TestSession, FatigueTest, SustainedAttentionTest
 
@@ -21,6 +21,11 @@ async def create_user(user: UserIn_Pydantic):
 @app.get("/results/{user_id}", response_model=List[Test_Results_Pydantic], response_model_exclude={"user", "id"})
 async def get_results(user_id: int):
     return await Test_Results_Pydantic.from_queryset(TestResults.filter(user_id=user_id).all())
+
+
+@app.get("/sessions/{user_id}", response_model=List[Test_Session_Pydantic], response_model_exclude={"test_result"})
+async def get_results(user_id: int):
+    return await Test_Session_Pydantic.from_queryset(TestSession.filter(test_result__user_id=user_id).all())
 
 
 @app.post("/results/{user_id}", response_model=TestResultModelIn)
