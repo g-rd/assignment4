@@ -1,7 +1,8 @@
 # pylint: disable=E0611,E0401
 from typing import List
 
-from data_models import User_Pydantic, UserModel, UserIn_Pydantic, Test_Results_Pydantic, TestResultModelIn
+from data_models import User_Pydantic, UserModel, UserIn_Pydantic, Test_Results_Pydantic, TestResultModelIn, \
+    TestResultModel
 from db_setup import app
 from models import TestResults, Users, TestSession, FatigueTest, SustainedAttentionTest
 
@@ -17,7 +18,7 @@ async def create_user(user: UserIn_Pydantic):
     return await User_Pydantic.from_tortoise_orm(user_obj)
 
 
-@app.get("/results/{user_id}", response_model=List[Test_Results_Pydantic])
+@app.get("/results/{user_id}", response_model=List[TestResultModel])
 async def get_results(user_id: int):
     return await Test_Results_Pydantic.from_queryset(TestResults.filter(user_id=user_id).all())
 

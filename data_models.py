@@ -47,9 +47,25 @@ class AttentionTestModelIn(BaseModel):
         orm_mode = True
 
 
+class SessionModel(BaseModel):
+    created: Optional[datetime]
+    fatigue_test: Optional[List[FatigueTestModelIn]]
+    attention_test: Optional[List[AttentionTestModelIn]]
+
+    class Config:
+        orm_mode = True
+
+
 class SessionModelIn(BaseModel):
     fatigue_test: Optional[List[FatigueTestModelIn]]
     attention_test: Optional[List[AttentionTestModelIn]]
+
+    class Config:
+        orm_mode = True
+
+
+class TestResultModel(BaseModel):
+    test_session: Optional[SessionModel]
 
     class Config:
         orm_mode = True
@@ -60,4 +76,3 @@ class TestResultModelIn(BaseModel):
 
     class Config:
         orm_mode = True
-
